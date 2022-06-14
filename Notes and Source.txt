@@ -7,3 +7,6 @@ This talk will present a possible future design for interface-based type erasure
 
 ---
 Sy Brand is Microsoft’s C++ Developer Advocate. Their background is in compilers and debuggers for embedded accelerators, but they’re also interested in generic library design, metaprogramming, functional-style C++, undefined behaviour, and making our communities more welcoming and inclusive.
+
+These slides are available at: https://ldionne.com/cppnow-2018-runtime-polymorphism
+Their source code is available at: https://github.com/ldionne/cppnow-2018-runtime-polymorphism

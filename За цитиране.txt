@@ -1,0 +1,5 @@
+За цитиране:
+
+https://dl.acm.org/doi/10.5555/2820282.2820311
+"Subtype polymorphism is a cornerstone of object-oriented programming. By hiding variability in behavior behind a uniform interface, polymorphism decouples clients from providers and thus enables genericity, modularity and extensibility. At the same time, however, it scatters the implementation of the behavior over multiple classes thus potentially hampering program comprehension."
+

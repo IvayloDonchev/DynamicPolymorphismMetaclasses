@@ -1,0 +1,11 @@
+( )	Round brackets or parentheses
+{ }	Curly brackets or braces
+[ ]	Square brackets or simply brackets (US)
+:	colon
+.	period characters
+&	ampersand
+*	asterisk
+@	at sign
+\	backslash
+~	tilde
+_	underscore, understrike

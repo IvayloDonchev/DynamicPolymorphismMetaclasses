@@ -1,70 +1,87 @@
 #include <iostream>
 #include <vector>
-struct vtable {
-	void (*speak)(void* ptr);
-	void (*destroy_)(void* ptr);
-	void* (*clone_)(void* ptr);
-	void* (*move_clone_)(void* ptr);
-};
 
-template<class T>
-vtable vtable_for{
-	[](void* ptr) { static_cast<T*>(ptr)->speak(); },
-	[](void* ptr) { delete static_cast<T*>(ptr); },
-	[](void* ptr) -> void*
-	{ return new T(*static_cast<T*>(ptr)); },
-	[](void* ptr) -> void*
-	{ return new T(std::move(*static_cast<T*>(ptr))); }
-};
-
-struct animal {
-	void* t_;
-	vtable const* vtable_;
-	void speak() { vtable_->speak(t_); }
-	~animal() { vtable_->destroy_(t_); }
-	template<class T>
-	animal(T const& t) :
-		t_(new T(t)),
-		vtable_(&vtable_for<T>)
-	{}
-	animal(animal const& rhs) :
-		t_(rhs.vtable_->clone_(rhs.t_)),
-		vtable_(rhs.vtable_)
-	{}
-	animal(animal&& rhs) noexcept :
-		t_(rhs.vtable_->move_clone_(rhs.t_)),
-		vtable_(rhs.vtable_) 
-	{}
-	animal& operator=(animal const& rhs) {
-		t_ = rhs.vtable_->clone_(rhs.t_);
-		vtable_ = rhs.vtable_; return *this;
-	}
-	animal& operator=(animal&& rhs) noexcept {
-		t_ = rhs.vtable_->move_clone_(rhs.t_);
-		vtable_ = rhs.vtable_; return *this;
-	}
-};
-
-struct cat
+struct VTable
 {
-	void speak()
+	void (*accelerate)(void* ptr);
+	void (*destruct)(void* ptr);
+	void* (*copy_)(void* ptr);
+	void* (*move_)(void* ptr);
+};
+
+template<typename T>
+VTable vtable_for
+{
+	[](void* p) { static_cast<T*>(p)->accelerate(); },
+	[](void* p) { delete static_cast<T*>(p); },
+	[](void* p) -> void*{ return new T(*static_cast<T*>(p)); },
+	[](void* p) -> void*{ return new T(std::move(*static_cast<T*>(p))); }
+};
+
+class Vehicle
+{
+public:
+	void* p_obj;
+	VTable const* p_vtable;
+	void accelerate() { p_vtable->accelerate(p_obj); }
+	~Vehicle() { p_vtable->destruct(p_obj); }
+	template<typename T>
+	Vehicle(T const& other) :
+		p_obj(new T(other)),
+		p_vtable(&vtable_for<T>)
+	{}
+	Vehicle(Vehicle const& other) :
+		p_obj(other.p_vtable->copy_(other.p_obj)),
+		p_vtable(other.p_vtable)
+	{}
+	Vehicle(Vehicle&& other) noexcept :
+		p_obj(other.p_vtable->move_(other.p_obj)),
+		p_vtable(other.p_vtable) 
+	{}
+	Vehicle& operator=(Vehicle const& other)
 	{
-		std::cout << "It is cat speaking...\n";
+		p_obj = other.p_vtable->copy_(other.p_obj);
+		p_vtable = other.p_vtable;
+		return *this;
+	}
+	Vehicle& operator=(Vehicle&& other) noexcept
+	{
+		p_obj = other.p_vtable->move_(other.p_obj);
+		p_vtable = other.p_vtable; return *this;
 	}
 };
 
-struct dog 
+class Car
 {
-	void speak()
+public:
+	void accelerate()
 	{
-		std::cout << "It is dog speaking...\n";
+		std::cout << "It is car accelerating...\n";
+	}
+};
+
+class Truck 
+{
+public:
+	void accelerate()
+	{
+		std::cout << "It is truck accelerating...\n";
 	}
 };
 
 int main() {
-	std::vector<animal> animals{ cat{}, dog{} };
-	for (auto&& a : animals) {
-		a.speak();
-	}
+	Vehicle v = Car{};
+	v.accelerate();
+	v = Truck{};
+	v.accelerate();
 
+	Vehicle c{ v };
+	c.accelerate();
+	
+	std::cout << "------------------\n";
+	std::vector<Vehicle> vehicles{ Car{}, Truck{} };
+	for (auto&& a : vehicles) {
+		a.accelerate();
+	}
 }
+
