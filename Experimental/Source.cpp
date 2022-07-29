@@ -74,14 +74,15 @@ int main() {
 	v.accelerate();
 	v = Truck{};
 	v.accelerate();
-
+	
 	Vehicle c{ v };
 	c.accelerate();
 	
 	std::cout << "------------------\n";
-	std::vector<Vehicle> vehicles{ Car{}, Truck{} };
-	for (auto&& a : vehicles) {
-		a.accelerate();
+	std::vector<Vehicle> vehicles{ Car{}, Truck{}, Truck{}, Car{} };
+	for (auto&& v : vehicles) {
+		v.accelerate();
 	}
+	c = std::move(v);
 }
 
