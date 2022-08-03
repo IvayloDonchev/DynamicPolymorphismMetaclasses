@@ -26,8 +26,8 @@ public:
 	void accelerate() { p_vtable->accelerate(p_obj); }
 	~Vehicle() { p_vtable->destruct(p_obj); }
 	template<typename T>
-	Vehicle(T const& other) :
-		p_obj(new T(other)),
+	Vehicle(T const& obj) :
+		p_obj(new T(obj)),
 		p_vtable(&vtable_for<T>)
 	{}
 	Vehicle(Vehicle const& other) :
@@ -56,7 +56,7 @@ class Car
 public:
 	void accelerate()
 	{
-		std::cout << "It is car accelerating...\n";
+		std::cout << "The car accelerates.\n";
 	}
 };
 
@@ -65,24 +65,24 @@ class Truck
 public:
 	void accelerate()
 	{
-		std::cout << "It is truck accelerating...\n";
+		std::cout << "The truck accelerates.\n";
 	}
 };
 
 int main() {
 	Vehicle v = Car{};
 	v.accelerate();
-	v = Truck{};
+	v = Truck{};	// move assignment
 	v.accelerate();
 	
-	Vehicle c{ v };
-	c.accelerate();
-	
+	Vehicle t{ v };	// copy construction
+	t.accelerate();
+		
 	std::cout << "------------------\n";
 	std::vector<Vehicle> vehicles{ Car{}, Truck{}, Truck{}, Car{} };
 	for (auto&& v : vehicles) {
 		v.accelerate();
 	}
-	c = std::move(v);
+	t = std::move(v);	// move assignment
 }
 

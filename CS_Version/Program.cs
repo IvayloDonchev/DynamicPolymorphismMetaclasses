@@ -41,6 +41,7 @@ public class Car : IVehicle
     {
         this.doors = doors;
     }
+
     public void Accelerate()
     {
         Console.WriteLine("Car accelerating");
@@ -49,6 +50,7 @@ public class Car : IVehicle
 
 public class Truck : IVehicle
 {
+
     public void Accelerate()
     {
         Console.WriteLine("Truck accelerating");

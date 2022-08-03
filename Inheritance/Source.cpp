@@ -1,26 +1,18 @@
 #include <iostream>
 #include <vector>
 
-class Vehicle
-{
+class Vehicle {
 public:
+	//virtual ~Vehicle();
 	virtual void Accelerate() const = 0;
 };
 
-class Car : public Vehicle
-{
-	virtual void Accelerate() const override
-	{
-		std::cout << "It is Car accelerating...\n";
-	}
+class Car : public Vehicle {
+	virtual void Accelerate() const override;
 };
 
-class Truck : public Vehicle
-{
-	virtual void Accelerate() const override
-	{
-		std::cout << "It is Truck accelerating...\n";
-	}
+class Truck : public Vehicle {
+	virtual void Accelerate() const override;
 };
 
 namespace LibOne {
@@ -36,6 +28,7 @@ namespace LibTwo {
 		virtual void Foo() {};
 	};
 }
+
 
 int main()
 {
@@ -56,5 +49,21 @@ int main()
 		v->Accelerate();
 	}
 
+	std::vector<void*> pv{
+		new Car{}, new Truck{}, new Truck{}, new Car{} };
+	for (int i = 0; i < pv.size(); ++i)
+	{
+		static_cast<Vehicle*>(pv[i])->Accelerate();
+	}
 	
+}
+
+inline void Car::Accelerate() const
+{
+	std::cout << "It is Car accelerating...\n";
+}
+
+inline void Truck::Accelerate() const
+{
+	std::cout << "It is Truck accelerating...\n";
 }

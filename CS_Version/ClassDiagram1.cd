@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Car" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.5" Y="2" Width="1.5" />
+  <Class Name="Car" BaseTypeListCollapsed="true">
+    <Position X="3" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.433" />
   </Class>
-  <Class Name="Truck" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.25" Y="2" Width="1.5" />
+  <Class Name="Truck" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="IVehicle">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
